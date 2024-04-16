@@ -6,11 +6,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen relative flex-col md:flex-row md:overflow-hidden">
-      <div className="w-20 flex-none lg:w-64 md:border-r">
+    <div className="relative flex h-screen flex-col md:flex-row md:overflow-hidden">
+      <div className="w-20 flex-none md:border-r lg:w-64">
         <SideNav />
       </div>
-      <div className="flex-grow mt-12 md:mt-0 flex-1 w-full md:overflow-y-auto sm:p-6 md:p-12 max-w-7xl mx-auto">
+      <div className="mx-auto mt-12 w-full max-w-7xl flex-1 flex-grow sm:p-6 md:mt-0 md:overflow-y-auto md:p-12">
         {children}
       </div>
     </div>

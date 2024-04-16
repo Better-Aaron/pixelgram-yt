@@ -86,18 +86,18 @@
 
 @layer components {
   .navLink {
-    @apply md:!justify-start space-x-2 md:!my-1.5 !px-3 w-full;
+    @apply w-full space-x-2 !px-3 md:!my-1.5 md:!justify-start;
   }
 
   .menuItem {
-    @apply dark:hover:bg-[#3C3C3C] !cursor-pointer flex items-center gap-x-2 !px-4 !py-3.5 !m-1.5 !rounded-lg font-medium;
+    @apply !m-1.5 flex !cursor-pointer items-center gap-x-2 !rounded-lg !px-4 !py-3.5 font-medium dark:hover:bg-[#3C3C3C];
   }
 
   .postOption {
-    @apply flex items-center justify-center border-b border-zinc-300 dark:border-neutral-700 text-sm font-medium w-full;
+    @apply flex w-full items-center justify-center border-b border-zinc-300 text-sm font-medium dark:border-neutral-700;
   }
 
   .dialogContent {
-    @apply bg-white dark:bg-neutral-800 !p-0 overflow-hidden !gap-0;
+    @apply !gap-0 overflow-hidden bg-white !p-0 dark:bg-neutral-800;
   }
 }
