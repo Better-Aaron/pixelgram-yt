@@ -16,7 +16,7 @@ export const getUserByEmail = async (email: string) => {
 };
 
 //* 사용자 아이디로 조회
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: string |undefined) => {
   try {
     const user = prisma.user.findUnique({
       where: {
