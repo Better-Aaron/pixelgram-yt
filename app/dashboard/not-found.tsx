@@ -1,6 +1,5 @@
-import { Frown } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+import { Frown } from 'lucide-react';
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
@@ -12,7 +11,7 @@ export default function NotFound() {
         back.
       </p>
       <Link
-        href={"/dashboard"}
+        href={'/dashboard'}
         className="mt-4 rounded-md mb-blue-500 px-5 py-2 text-sm text-white transtiion-colors hover:bg-blue-400"
       >
         Go Back

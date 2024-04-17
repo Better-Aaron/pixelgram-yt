@@ -7,8 +7,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import {
   Activity,
   Bookmark,
@@ -20,8 +20,8 @@ import {
   Sun,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Label } from "../ui/label";
-import { Switch } from "../ui/switch";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 export const MoreDropdown = () => {
   const [showModeToggle, setShowModeToggle] = useState(false);
