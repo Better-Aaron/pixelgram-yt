@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import prisma from '@/lib/prisma';
-import authConfig from '@/auth.config';
-import { getUserById } from './data/user';
-import { getAccountByUserId } from '@/data/account';
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "@/lib/prisma";
+import authConfig from "@/auth.config";
+import { getUserById } from "./data/user";
+import { getAccountByUserId } from "@/data/account";
 
 export const {
   handlers: { GET, POST },
@@ -12,8 +12,8 @@ export const {
   signOut,
 } = NextAuth({
   pages: {
-    signIn: '/auth/login',
-    error: '/auth/error',
+    signIn: "/auth/login",
+    error: "/auth/error",
   },
   events: {
     async linkAccount({ user }) {
@@ -26,18 +26,24 @@ export const {
     },
   },
   callbacks: {
+    async authorized({ request, auth }) {
+      console.log({ request, auth });
+      const isLoggedIn = !!auth;
+      const isOnDashboard = request.nextUrl.pathname.startsWith("/dashboard");
+      if (isOnDashboard) {
+        if (isLoggedIn) return true;
+        return false;
+      }
+      return true;
+    },
     async signIn({ user, account, profile }) {
-      console.log({
-        user,
-        account,
-      });
       //* 네이버 로그인시 이름이 insert 되지 않는 문제 보정
       if (!user.name) {
         user.name = profile?.response?.name;
       }
 
       //* Allow OAuth without email verification.
-      if (account?.provider !== 'credentials') return true;
+      if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user.id);
 
@@ -80,7 +86,7 @@ export const {
     },
   },
   adapter: PrismaAdapter(prisma),
-  session: { strategy: 'jwt' },
+  session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET,
   ...authConfig,
 });
