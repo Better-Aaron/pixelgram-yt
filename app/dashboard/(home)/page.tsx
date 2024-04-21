@@ -1,5 +1,5 @@
 import { Posts } from "@/components/posts";
-import { PostsSkeleton } from "@/components/posts-skeleton";
+import { PostsSkeleton } from "@/components/sceletons";
 import { Suspense } from "react";
 
 const DashboardPage = () => {

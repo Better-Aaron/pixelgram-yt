@@ -91,7 +91,10 @@ export const MoreDropdown = () => {
               <p>Switch appearance</p>
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="menuItem" onClick={() => signOut()}>
+            <DropdownMenuItem
+              className="menuItem"
+              onClick={() => signOut({ callbackUrl: "/auth/login" })}
+            >
               <LogOut size={20} />
               <p>Log out</p>
             </DropdownMenuItem>

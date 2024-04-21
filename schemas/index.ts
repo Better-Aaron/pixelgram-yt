@@ -44,3 +44,32 @@ export const NewPasswordSchema = z
     message: "비밀번호가 일치하지 않습니다.",
     path: ["confirmPassword"],
   });
+
+//* Post - post 스키마
+export const PostSchema = z.object({
+  id: z.string(),
+  fileUrl: z.string().url(),
+  caption: z.string().optional(),
+});
+
+export const CreatePostSchema = PostSchema.omit({ id: true });
+export const UpdatePostSchema = PostSchema;
+export const DeletePostSchema = PostSchema.pick({ id: true });
+
+//* Comment - comment 스키마
+export const CommentSchema = z.object({
+  id: z.string(),
+  body: z.string(),
+  postId: z.string(),
+});
+
+//* User -  User 스키마
+export const UserSchema = z.object({
+  id: z.string(),
+  username: z.string().optional(),
+  name: z.string().optional(),
+  image: z.string().optional(),
+  bio: z.string().max(150).optional(),
+  website: z.string().optional(),
+  gender: z.string().optional(),
+});
