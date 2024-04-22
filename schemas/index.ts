@@ -63,6 +63,10 @@ export const CommentSchema = z.object({
   postId: z.string(),
 });
 
+export const CreateCommentSchema = CommentSchema.omit({ id: true });
+export const UpdateCommentSchema = CommentSchema;
+export const DeleteCommentSchema = CommentSchema.pick({ id: true });
+
 //* User -  User 스키마
 export const UserSchema = z.object({
   id: z.string(),
@@ -72,4 +76,15 @@ export const UserSchema = z.object({
   bio: z.string().max(150).optional(),
   website: z.string().optional(),
   gender: z.string().optional(),
+});
+
+export const UpdateUserSchema = UserSchema;
+export const DeleteUserSchema = UserSchema.pick({ id: true });
+export const FollowUserSchema = UserSchema.pick({ id: true });
+
+export const BookmarkSchema = z.object({
+  postId: z.string(),
+});
+export const LikeSchema = z.object({
+  postId: z.string(),
 });

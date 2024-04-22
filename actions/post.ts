@@ -2,6 +2,7 @@
 
 import { getUserId } from "@/hooks/get-userId";
 import {
+  BookmarkSchema,
   CreatePostSchema,
   DeletePostSchema,
   UpdatePostSchema,
@@ -10,6 +11,7 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { error } from "console";
 
 //* 포스트 등록
 export const createPost = async (values: z.infer<typeof CreatePostSchema>) => {
@@ -116,5 +118,69 @@ export const updatePost = async (values: z.infer<typeof UpdatePostSchema>) => {
     });
   } catch (error) {
     return { message: "Database Error: Failed to Update Post." };
+  }
+};
+
+//* bookmark
+export const bookmarkPost = async (value: FormDataEntryValue | null) => {
+  const userId = await getUserId();
+
+  const validateFields = BookmarkSchema.safeParse({ postId: value });
+  if (!validateFields.success) {
+    return {
+      errors: validateFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Bookmark Post.",
+    };
+  }
+
+  const { postId } = validateFields.data;
+
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (!post) {
+    throw new Error("post not found.");
+  }
+
+  const bookmark = await prisma.savedPost.findUnique({
+    where: {
+      postId_userId: {
+        postId,
+        userId,
+      },
+    },
+  });
+
+  if (bookmark) {
+    try {
+      await prisma.savedPost.delete({
+        where: {
+          postId_userId: {
+            postId,
+            userId,
+          },
+        },
+      });
+      revalidatePath("/dashboard");
+      return { message: "Unbookmarked Post." };
+    } catch (error) {
+      return { message: "Database Error: Failed to Unbookmark Post." };
+    }
+  }
+
+  try {
+    await prisma.savedPost.create({
+      data: {
+        postId,
+        userId,
+      },
+    });
+    revalidatePath("/dashboard");
+    return { message: "Bookmarked Post." };
+  } catch (error) {
+    return { message: "Database Error: Failed to Bookmark Post." };
   }
 };
