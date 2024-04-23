@@ -5,6 +5,7 @@ import {
   BookmarkSchema,
   CreatePostSchema,
   DeletePostSchema,
+  LikeSchema,
   UpdatePostSchema,
 } from "@/schemas";
 import { z } from "zod";
@@ -182,5 +183,70 @@ export const bookmarkPost = async (value: FormDataEntryValue | null) => {
     return { message: "Bookmarked Post." };
   } catch (error) {
     return { message: "Database Error: Failed to Bookmark Post." };
+  }
+};
+
+//* likes
+export const likePost = async (value: FormDataEntryValue | null) => {
+  const userId = await getUserId();
+
+  const validatedFields = LikeSchema.safeParse({ postId: value });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      messages: "Missing Fields. Failed to Like Post",
+    };
+  }
+
+  const { postId } = validatedFields.data;
+
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (!post) {
+    throw new Error("Post not found");
+  }
+
+  const like = await prisma.like.findUnique({
+    where: {
+      postId_userId: {
+        postId,
+        userId,
+      },
+    },
+  });
+
+  if (like) {
+    try {
+      await prisma.like.delete({
+        where: {
+          postId_userId: {
+            postId,
+            userId,
+          },
+        },
+      });
+      revalidatePath("/dashboard");
+      return { message: "Unliked Post." };
+    } catch (error) {
+      return { message: "Database Error: Failed to Unlike Post." };
+    }
+  }
+
+  try {
+    await prisma.like.create({
+      data: {
+        postId,
+        userId,
+      },
+    });
+    revalidatePath("/dashboard");
+    return { message: "Liked Post." };
+  } catch (error) {
+    return { message: "Database Error: Failed to Like Post." };
   }
 };

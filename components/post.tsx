@@ -1,13 +1,13 @@
 import { auth } from "@/auth";
 import { PostWithExtras } from "@/lib/definitions";
-import React from "react";
-import { UserAvatar } from "./auth/user-avatar";
-import { TimeStamp } from "./time-stamp";
-import { Card } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { UserAvatar } from "./auth/user-avatar";
 import { PostActions } from "./post-actions";
+import { PostOptions } from "./post-options";
+import { TimeStamp } from "./time-stamp";
+import { Card } from "./ui/card";
+import { Commnets } from "./commnets";
 
 export const Post = async ({ post }: { post: PostWithExtras }) => {
   const session = await auth();
@@ -34,7 +34,7 @@ export const Post = async ({ post }: { post: PostWithExtras }) => {
             </p>
           </div>
         </div>
-        {/* postOptions */}
+        <PostOptions post={post} userId={userId} />
       </div>
       <Card className="relative h-[450px] w-full overflow-hidden rounded-none sm:rounded-md">
         <Image
@@ -53,6 +53,8 @@ export const Post = async ({ post }: { post: PostWithExtras }) => {
           <p>{post.caption}</p>
         </div>
       )}
+
+      <Commnets postId={post.id} comments={post.comments} user={session.user} />
     </div>
   );
 };
