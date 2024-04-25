@@ -12,7 +12,6 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { error } from "console";
 
 //* 포스트 등록
 export const createPost = async (values: z.infer<typeof CreatePostSchema>) => {

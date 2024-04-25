@@ -1,6 +1,6 @@
 import React from "react";
 
-const MorePosts = () => {
+const MorePosts = ({ postId }: { postId: string }) => {
   return <div>MorePosts</div>;
 };
 
