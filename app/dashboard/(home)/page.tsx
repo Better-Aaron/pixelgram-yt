@@ -1,4 +1,4 @@
-import { Posts } from "@/components/posts";
+import { Posts } from "@/components/post/posts";
 import { PostsSkeleton } from "@/components/sceletons";
 import { Suspense } from "react";
 

@@ -84,6 +84,7 @@ export const deletePost = async (formData: FormData) => {
 //* 포스트 수정
 export const updatePost = async (values: z.infer<typeof UpdatePostSchema>) => {
   const userId = await getUserId();
+
   const validatedFields = UpdatePostSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -119,6 +120,9 @@ export const updatePost = async (values: z.infer<typeof UpdatePostSchema>) => {
   } catch (error) {
     return { message: "Database Error: Failed to Update Post." };
   }
+
+  revalidatePath("/dashboard");
+  redirect("/dashboard");
 };
 
 //* bookmark

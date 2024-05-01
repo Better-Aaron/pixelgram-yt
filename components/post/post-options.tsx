@@ -1,10 +1,10 @@
 "use client";
 
 import { Post } from "@prisma/client";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SubmitButton } from "./submit-button";
+import { SubmitButton } from "../submit-button";
 import { deletePost } from "@/actions/post";
 import { toast } from "sonner";
 import Link from "next/link";

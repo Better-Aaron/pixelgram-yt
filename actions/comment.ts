@@ -1,7 +1,7 @@
 "use server";
 
 import { getUserId } from "@/hooks/get-userId";
-import { CreateCommentSchema } from "@/schemas";
+import { CreateCommentSchema, DeleteCommentSchema } from "@/schemas";
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -45,5 +45,38 @@ export const createComment = async (
     return { message: "Create Comment" };
   } catch (error) {
     return { message: "Database Error: Failed to create comment" };
+  }
+};
+
+//* comment 삭제
+export const deleteComment = async (formData: FormData) => {
+  const userId = await getUserId();
+
+  const { id } = DeleteCommentSchema.parse({
+    id: formData.get("id"),
+  });
+
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id,
+      userId,
+    },
+  });
+
+  if (!comment) {
+    throw new Error("Comment not found");
+  }
+
+  try {
+    await prisma.comment.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    return { message: "deleted comment." };
+  } catch (error) {
+    return { message: "Database Error: Failed to Delete Comment." };
   }
 };

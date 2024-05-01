@@ -2,12 +2,12 @@ import { auth } from "@/auth";
 import { PostWithExtras } from "@/lib/definitions";
 import Image from "next/image";
 import Link from "next/link";
-import { UserAvatar } from "./auth/user-avatar";
+import { UserAvatar } from "../auth/user-avatar";
 import { PostActions } from "./post-actions";
 import { PostOptions } from "./post-options";
-import { TimeStamp } from "./time-stamp";
-import { Card } from "./ui/card";
-import { Commnets } from "./commnets";
+import { TimeStamp } from "../time-stamp";
+import { Card } from "../ui/card";
+import { Commnets } from "../commnets";
 
 export const Post = async ({ post }: { post: PostWithExtras }) => {
   const session = await auth();

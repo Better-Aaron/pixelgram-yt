@@ -3,11 +3,11 @@
 import { PostWithExtras } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { LikeButton } from "./like-button";
-import { ActionIcon } from "./action-icon";
+import { LikeButton } from "../like-button";
+import { ActionIcon } from "../action-icon";
 import { MessageCircle } from "lucide-react";
-import { ShareButton } from "./share-button";
-import { BookmarkButton } from "./bookmark-button";
+import { ShareButton } from "../share-button";
+import { BookmarkButton } from "../bookmark-button";
 
 interface PostActionsProps {
   post: PostWithExtras;
